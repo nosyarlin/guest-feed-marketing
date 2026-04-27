@@ -9,6 +9,7 @@ import { trackEvent } from './lib/analytics'
 
 const productPrice = '$50'
 const tallyFormUrl = import.meta.env.VITE_TALLY_FORM_URL || '#'
+const utmStorageKey = 'guest_feed_utm_params'
 
 type PayIntent = 'yes' | 'maybe' | 'no'
 
@@ -21,30 +22,74 @@ function getUtmParams(): URLSearchParams {
       allowed.set(key, value)
     }
   })
-  return allowed
+  if (allowed.size > 0) {
+    window.sessionStorage.setItem(utmStorageKey, allowed.toString())
+    return allowed
+  }
+
+  const persisted = window.sessionStorage.getItem(utmStorageKey)
+  return persisted ? new URLSearchParams(persisted) : allowed
+}
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+}
+
+function normalizeMonthForTally(monthValue: string): string {
+  return monthValue ? `${monthValue}-01` : ''
+}
+
+function normalizeEmailForTally(emailValue: string): string {
+  return emailValue.trim().toLowerCase()
+}
+
+function isTallyConfigured(): boolean {
+  return Boolean(tallyFormUrl && tallyFormUrl !== '#')
+}
+
+function buildTallyUrl(input: {
+  email: string
+  eventMonth: string
+  payIntent: PayIntent
+  consent: boolean
+}): string {
+  if (!isTallyConfigured()) {
+    return '#'
+  }
+
+  const url = new URL(tallyFormUrl)
+  const utmParams = getUtmParams()
+  utmParams.forEach((value, key) => url.searchParams.set(key, value))
+  url.searchParams.set('email', normalizeEmailForTally(input.email))
+  url.searchParams.set('event_month', normalizeMonthForTally(input.eventMonth))
+  url.searchParams.set('would_pay_50', input.payIntent)
+  url.searchParams.set('consent', input.consent ? 'yes' : 'no')
+  return url.toString()
 }
 
 function App() {
+  const [email, setEmail] = useState('')
   const [payIntent, setPayIntent] = useState<PayIntent>('maybe')
   const [eventMonth, setEventMonth] = useState('')
   const [consent, setConsent] = useState(false)
   const [confirmed, setConfirmed] = useState(false)
+  const hasValidEmail = isValidEmail(email)
+  const tallyUnavailable = !isTallyConfigured()
+  const canOpenTallyForm = consent && hasValidEmail && !tallyUnavailable
 
   const ctaHref = useMemo(() => {
-    if (!tallyFormUrl || tallyFormUrl === '#') {
-      return '#'
-    }
-    const url = new URL(tallyFormUrl)
-    const utmParams = getUtmParams()
-    utmParams.forEach((value, key) => url.searchParams.set(key, value))
-    if (eventMonth) {
-      url.searchParams.set('event_month_hint', eventMonth)
-    }
-    url.searchParams.set('would_pay_50_hint', payIntent)
-    return url.toString()
-  }, [eventMonth, payIntent])
+    return buildTallyUrl({
+      email,
+      eventMonth,
+      payIntent,
+      consent,
+    })
+  }, [email, eventMonth, payIntent, consent])
 
   const handlePrimaryCtaClick = () => {
+    if (!canOpenTallyForm) {
+      return
+    }
     trackEvent('cta_click', { placement: 'hero_waitlist' })
     if (payIntent === 'yes') {
       trackEvent('pricing_intent_yes', { source: 'hero_form' })
@@ -64,11 +109,16 @@ function App() {
       <PricingSection productPrice={productPrice} />
       <WaitlistSection
         productPrice={productPrice}
+        email={email}
         eventMonth={eventMonth}
         payIntent={payIntent}
         consent={consent}
         confirmed={confirmed}
         ctaHref={ctaHref}
+        hasValidEmail={hasValidEmail}
+        canOpenTallyForm={canOpenTallyForm}
+        tallyUnavailable={tallyUnavailable}
+        onEmailChange={setEmail}
         onEventMonthChange={setEventMonth}
         onPayIntentChange={setPayIntent}
         onConsentChange={setConsent}

@@ -4,11 +4,16 @@ type PayIntent = 'yes' | 'maybe' | 'no'
 
 type WaitlistSectionProps = {
   productPrice: string
+  email: string
   eventMonth: string
   payIntent: PayIntent
   consent: boolean
   confirmed: boolean
   ctaHref: string
+  hasValidEmail: boolean
+  canOpenTallyForm: boolean
+  tallyUnavailable: boolean
+  onEmailChange: (email: string) => void
   onEventMonthChange: (eventMonth: string) => void
   onPayIntentChange: (payIntent: PayIntent) => void
   onConsentChange: (consent: boolean) => void
@@ -18,11 +23,16 @@ type WaitlistSectionProps = {
 
 export function WaitlistSection({
   productPrice,
+  email,
   eventMonth,
   payIntent,
   consent,
   confirmed,
   ctaHref,
+  hasValidEmail,
+  canOpenTallyForm,
+  tallyUnavailable,
+  onEmailChange,
   onEventMonthChange,
   onPayIntentChange,
   onConsentChange,
@@ -44,6 +54,18 @@ export function WaitlistSection({
           secure your spot.
         </p>
         <div className="mt-8 grid gap-5 md:grid-cols-2">
+          <label className="grid gap-2 text-left text-xs uppercase tracking-[0.06em] text-[#5c4f44] md:col-span-2">
+            Email
+            <input
+              className="rounded-sm border border-[#e2d6c8] bg-[#fffefa] px-3 py-3 text-base text-[#1f1812]"
+              type="email"
+              value={email}
+              onChange={(event) => onEmailChange(event.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+              required
+            />
+          </label>
           <label className="grid gap-2 text-left text-xs uppercase tracking-[0.06em] text-[#5c4f44]">
             Wedding month
             <input
@@ -77,17 +99,27 @@ export function WaitlistSection({
         </label>
         <a
           className={`mt-5 inline-block w-full rounded-sm px-6 py-3.5 text-xs font-bold uppercase tracking-[0.04em] md:text-sm ${
-            consent
+            canOpenTallyForm
               ? 'bg-[#9d6b5b] text-[#fffdf8]'
               : 'pointer-events-none bg-[#9d6b5b]/55 text-[#fffdf8]/75'
           }`}
-          href={consent ? ctaHref : '#'}
+          href={canOpenTallyForm ? ctaHref : '#'}
           target="_blank"
           rel="noreferrer"
           onClick={onPrimaryCtaClick}
         >
           Register interest
         </a>
+        {!hasValidEmail ? (
+          <p className="mt-2 text-left text-sm text-[#9d6b5b]">
+            Enter a valid email to continue.
+          </p>
+        ) : null}
+        {tallyUnavailable ? (
+          <p className="mt-2 text-left text-sm text-[#9d6b5b]">
+            Tally form URL is not configured yet. Set `VITE_TALLY_FORM_URL`.
+          </p>
+        ) : null}
         <button
           type="button"
           className="mt-4 w-full rounded-sm border border-[#e2d6c8] bg-[#fffefa] px-6 py-3.5 text-xs font-bold uppercase tracking-[0.04em] text-[#1f1812] md:text-sm"
