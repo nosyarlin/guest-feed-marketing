@@ -61,8 +61,8 @@ export const openWaitlistForm = () => {
   }
   window.Tally?.openPopup(tallyFormId, {
     layout: "modal",
-    autoClose: 0,
-    doNotShowAfterSubmit: true,
+    autoClose: 2000,
+    doNotShowAfterSubmit: false,
     onOpen: () => {
       trackEvent("tally_form_open");
     },
