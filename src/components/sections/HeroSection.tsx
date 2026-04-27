@@ -1,7 +1,10 @@
 import { trackEvent } from "../../lib/analytics";
 import { ButtonLink } from "../ui/ButtonLink";
-import heroImage from "../../assets/hero_optimized.jpg";
-import heroImageMobile from "../../assets/hero_mobile.jpg";
+import feedDemoMp4 from "../../assets/tiny_feed_demo_v2.mp4";
+import feedDemoMobileMp4 from "../../assets/tiny_feed_demo_v2_mobile.mp4";
+import feedDemoWebm from "../../assets/tiny_feed_demo_v2.webm";
+import feedDemoMobileWebm from "../../assets/tiny_feed_demo_v2_mobile.webm";
+import feedDemoPoster from "../../assets/tiny_feed_demo_v2_poster.jpg";
 import telegramCutoutImage from "../../assets/telegram_cutout.png";
 
 export function HeroSection() {
@@ -30,20 +33,39 @@ export function HeroSection() {
           </ButtonLink>
         </div>
       </div>
-      <div className="relative min-h-[360px] md:min-h-[560px]">
-        <div className="absolute inset-x-0 bottom-2 top-0 rounded-xl border border-[#e2d6c8] bg-[linear-gradient(165deg,rgba(255,253,248,0.55),rgba(243,237,228,0.95)),radial-gradient(circle_at_55%_32%,rgba(157,107,91,0.28),transparent_38%),linear-gradient(35deg,#fffefa,#f3ede4)]">
-          <picture>
-            <source media="(max-width: 768px)" srcSet={heroImageMobile} />
+      <div className="relative mx-auto w-full max-w-md pb-6 pt-0 md:mx-0 md:max-w-none md:pb-10">
+        <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-[#e2d6c8] bg-[#f2ebe2] shadow-[0_12px_32px_rgba(61,45,32,0.1)]">
+          <video
+            className="h-full w-full object-contain object-center"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={feedDemoPoster}
+          >
+            <source
+              media="(max-width: 767px)"
+              src={feedDemoMobileWebm}
+              type="video/webm"
+            />
+            <source
+              media="(max-width: 767px)"
+              src={feedDemoMobileMp4}
+              type="video/mp4"
+            />
+            <source src={feedDemoWebm} type="video/webm" />
+            <source src={feedDemoMp4} type="video/mp4" />
             <img
-              src={heroImage}
-              alt="Wedding couple"
-              className="absolute inset-0 h-full w-full object-cover"
+              src={feedDemoPoster}
+              alt="Wedding feed with guest messages"
+              className="h-full w-full object-contain object-center"
               loading="eager"
               decoding="async"
             />
-          </picture>
+          </video>
         </div>
-        <div className="absolute -bottom-3 -right-3 w-[100px] md:w-[220px] md:-bottom-16 md:-right-12">
+        <div className="absolute -bottom-2 -right-2 w-[100px] md:-bottom-10 md:-right-10 md:w-[220px]">
           <img
             src={telegramCutoutImage}
             alt="Telegram app on phone"
