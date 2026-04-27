@@ -1,12 +1,10 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_GA_MEASUREMENT_ID?: string
-  readonly VITE_TALLY_FORM_URL?: string
-  readonly VITE_DEMO_VIDEO_URL?: string
-  readonly VITE_DEMO_POSTER_URL?: string
+  readonly VITE_GA_MEASUREMENT_ID?: string;
+  readonly VITE_TALLY_FORM_URL?: string;
 }
 
 interface ImportMeta {
-  readonly env: ImportMetaEnv
+  readonly env: ImportMetaEnv;
 }

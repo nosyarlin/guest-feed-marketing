@@ -35,8 +35,6 @@ jobs:
         env:
           VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
           VITE_TALLY_FORM_URL: ${{ vars.VITE_TALLY_FORM_URL }}
-          VITE_DEMO_VIDEO_URL: ${{ vars.VITE_DEMO_VIDEO_URL }}
-          VITE_DEMO_POSTER_URL: ${{ vars.VITE_DEMO_POSTER_URL }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

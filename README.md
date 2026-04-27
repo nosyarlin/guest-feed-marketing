@@ -14,8 +14,6 @@ npm run dev
 
 - `VITE_GA_MEASUREMENT_ID`: Google Analytics 4 measurement ID.
 - `VITE_TALLY_FORM_URL`: public Tally form URL for waitlist conversion.
-- `VITE_DEMO_VIDEO_URL`: optional MP4 URL for demo section.
-- `VITE_DEMO_POSTER_URL`: optional poster image URL for the demo video.
 
 ## Analytics events
 
@@ -28,6 +26,7 @@ npm run dev
 ## Form requirements in Tally
 
 Configure the form with:
+
 - email (required)
 - event month (required)
 - would pay 50 (yes/no/maybe, required)
