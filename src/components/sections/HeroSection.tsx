@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { trackEvent } from "../../lib/analytics";
 import { ButtonLink } from "../ui/ButtonLink";
 import feedDemoMp4 from "../../assets/tiny_feed_demo_v2.mp4";
@@ -8,6 +9,16 @@ import feedDemoPoster from "../../assets/tiny_feed_demo_v2_poster.jpg";
 import telegramCutoutImage from "../../assets/telegram_cutout.png";
 
 export function HeroSection() {
+  const hasTrackedVideoPlay = useRef(false);
+
+  const handleDemoPlay = () => {
+    if (hasTrackedVideoPlay.current) {
+      return;
+    }
+    hasTrackedVideoPlay.current = true;
+    trackEvent("video_play", { placement: "hero_demo" });
+  };
+
   return (
     <section className="grid gap-6 px-2 pb-12 pt-8 md:grid-cols-[1.1fr_1fr] md:gap-12 md:px-6 md:pb-24 md:pt-24">
       <div>
@@ -43,6 +54,7 @@ export function HeroSection() {
             playsInline
             preload="metadata"
             poster={feedDemoPoster}
+            onPlay={handleDemoPlay}
           >
             <source
               media="(max-width: 767px)"
