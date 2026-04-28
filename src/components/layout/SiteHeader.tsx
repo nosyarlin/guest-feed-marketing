@@ -1,7 +1,12 @@
 import { trackEvent } from "../../lib/analytics";
-import { ButtonLink } from "../ui/ButtonLink";
+import { openWaitlistForm } from "../../lib/tally";
 
 export function SiteHeader() {
+  const handleOnJoinWaitlistClick = () => {
+    trackEvent("cta_click", { placement: "top_nav" });
+    openWaitlistForm();
+  };
+
   return (
     <header className="flex h-20 items-center justify-between rounded-xl border border-[#e2d6c8] bg-[#fffdfa]/90 px-5 shadow-[0_8px_24px_rgba(31,24,18,0.06)] md:h-24 md:px-8">
       <div className="font-['Cormorant_Garamond'] text-3xl font-bold text-[#9d6b5b] md:text-4xl">
@@ -21,13 +26,12 @@ export function SiteHeader() {
           Pricing
         </a>
       </nav>
-      <ButtonLink
-        href="#waitlist"
-        className="hidden md:inline-block md:px-5 md:py-2.5 md:text-sm"
-        onClick={() => trackEvent("cta_click", { placement: "top_nav" })}
+      <button
+        className="rounded-sm bg-[#9d6b5b] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-[#fffdf8] hover:cursor-pointer hidden md:inline-block md:px-5 md:py-2.5 md:text-sm"
+        onClick={handleOnJoinWaitlistClick}
       >
         Join waitlist
-      </ButtonLink>
+      </button>
     </header>
   );
 }

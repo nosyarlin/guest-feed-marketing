@@ -1,10 +1,12 @@
 import { trackEvent } from "../../lib/analytics";
+import { openWaitlistForm } from "../../lib/tally";
 
-type PricingSectionProps = {
-  productPrice: string;
-};
+export function PricingSection() {
+  const handleOnSecureYourDateClick = () => {
+    trackEvent("cta_click", { placement: "pricing" });
+    openWaitlistForm();
+  };
 
-export function PricingSection({ productPrice }: PricingSectionProps) {
   return (
     <section
       id="pricing"
@@ -36,7 +38,7 @@ export function PricingSection({ productPrice }: PricingSectionProps) {
         </p>
         <div className="mt-14">
           <p className="font-['Cormorant_Garamond'] text-6xl leading-none text-[#1f1812] italic md:text-7xl">
-            {productPrice}
+            $50
           </p>
           <p className="mt-2 text-base font-semibold uppercase tracking-[0.12em] text-[#5c4f44] md:text-lg">
             One-time flat fee
@@ -45,13 +47,12 @@ export function PricingSection({ productPrice }: PricingSectionProps) {
         <p className="mt-10 font-['Cormorant_Garamond'] text-xl italic text-[#5c4f44] md:mt-12 md:text-2xl">
           For your entire wedding journey
         </p>
-        <a
-          className="mt-auto inline-block rounded-sm bg-[#9d6b5b] px-6 py-4 text-sm font-semibold uppercase tracking-[0.08em] text-[#fffdf8]"
-          href="#waitlist"
-          onClick={() => trackEvent("cta_click", { placement: "pricing" })}
+        <button
+          className="mt-auto inline-block rounded-sm bg-[#9d6b5b] px-6 py-4 text-sm font-semibold uppercase tracking-[0.08em] text-[#fffdf8] hover:cursor-pointer"
+          onClick={handleOnSecureYourDateClick}
         >
           Secure your date
-        </a>
+        </button>
       </div>
     </section>
   );

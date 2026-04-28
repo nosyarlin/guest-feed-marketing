@@ -1,13 +1,18 @@
 import { trackEvent } from "../../lib/analytics";
-import { ButtonLink } from "../ui/ButtonLink";
 import feedDemoMp4 from "../../assets/tiny_feed_demo_v2.mp4";
 import feedDemoMobileMp4 from "../../assets/tiny_feed_demo_v2_mobile.mp4";
 import feedDemoWebm from "../../assets/tiny_feed_demo_v2.webm";
 import feedDemoMobileWebm from "../../assets/tiny_feed_demo_v2_mobile.webm";
 import feedDemoPoster from "../../assets/tiny_feed_demo_v2_poster.jpg";
 import telegramCutoutImage from "../../assets/telegram_cutout.png";
+import { openWaitlistForm } from "../../lib/tally";
 
 export function HeroSection() {
+  const handleOnExpressInterestClick = () => {
+    trackEvent("cta_click", { placement: "hero_primary" });
+    openWaitlistForm();
+  };
+
   return (
     <section className="grid gap-6 px-2 pb-12 pt-8 md:grid-cols-[1.1fr_1fr] md:gap-12 md:px-6 md:pb-24 md:pt-24">
       <div>
@@ -22,15 +27,12 @@ export function HeroSection() {
           via Telegram, appearing instantly on the live display.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <ButtonLink
-            href="#waitlist"
-            className="text-sm"
-            onClick={() =>
-              trackEvent("cta_click", { placement: "hero_primary" })
-            }
+          <button
+            className="rounded-sm bg-[#9d6b5b] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-[#fffdf8] hover:cursor-pointer"
+            onClick={handleOnExpressInterestClick}
           >
             Express interest
-          </ButtonLink>
+          </button>
         </div>
       </div>
       <div className="relative mx-auto w-full max-w-md pb-6 pt-0 md:mx-0 md:max-w-none md:pb-10">
