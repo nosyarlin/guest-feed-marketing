@@ -6,6 +6,7 @@ import feedDemoMobileWebm from "../../assets/tiny_feed_demo_v2_mobile.webm";
 import feedDemoPoster from "../../assets/tiny_feed_demo_v2_poster.jpg";
 import telegramCutoutImage from "../../assets/telegram_cutout.png";
 import { openWaitlistForm } from "../../lib/tally";
+import { Button } from "../atoms/Button";
 
 export function HeroSection() {
   const handleOnExpressInterestClick = () => {
@@ -16,27 +17,27 @@ export function HeroSection() {
   return (
     <section className="grid gap-6 px-2 pb-12 pt-8 md:grid-cols-[1.1fr_1fr] md:gap-12 md:px-6 md:pb-24 md:pt-24">
       <div>
-        <p className="mb-5 inline-flex rounded-full border border-[#d4c1ad] px-4 py-1.5 text-xs uppercase tracking-[0.09em] text-[#9d6b5b]">
+        <p className="mb-5 inline-flex rounded-full border border-border-soft px-4 py-1.5 text-xs uppercase tracking-[0.09em] text-accent">
           Private and sophisticated
         </p>
         <h1 className="mb-6 font-['Cormorant_Garamond'] text-4xl leading-[1.05] md:mb-7 md:text-8xl">
           Capturing the magic of your special day, <em>live.</em>
         </h1>
-        <p className="max-w-2xl text-base leading-7 text-[#5c4f44] md:text-xl md:leading-9">
+        <p className="max-w-2xl text-base leading-7 text-text-muted md:text-xl md:leading-9">
           A private social wall for your wedding. Guests share photos and wishes
           via Telegram, appearing instantly on the live display.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <button
-            className="rounded-sm bg-[#9d6b5b] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.04em] text-[#fffdf8] hover:cursor-pointer"
+          <Button
+            className="font-bold tracking-[0.04em]"
             onClick={handleOnExpressInterestClick}
           >
             Express interest
-          </button>
+          </Button>
         </div>
       </div>
       <div className="relative mx-auto w-full max-w-md pb-6 pt-0 md:mx-0 md:max-w-none md:pb-10">
-        <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-[#e2d6c8] bg-[#f2ebe2] shadow-[0_12px_32px_rgba(61,45,32,0.1)]">
+        <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-border bg-bg-muted shadow-xl">
           <video
             className="h-full w-full object-contain object-center"
             autoPlay
@@ -71,7 +72,7 @@ export function HeroSection() {
           <img
             src={telegramCutoutImage}
             alt="Telegram app on phone"
-            className="h-auto w-full drop-shadow-[0_16px_20px_rgba(31,24,18,0.35)]"
+            className="h-auto w-full drop-shadow-xl"
             loading="lazy"
             decoding="async"
           />

@@ -1,4 +1,4 @@
-import { trackEvent } from "./analytics";
+import { trackEvent, type EventValue } from "./analytics";
 
 const tallyFormId = import.meta.env.VITE_TALLY_FORM_ID;
 
@@ -27,12 +27,12 @@ interface TallyPopupOptions {
   doNotShowAfterSubmit?: boolean;
   customFormUrl?: string;
   hiddenFields?: {
-    [key: string]: any;
+    [key: string]: unknown;
   };
   onOpen?: () => void;
   onClose?: () => void;
   onPageView?: (page: number) => void;
-  onSubmit?: (payload: any) => void;
+  onSubmit?: (payload: EventValue) => void;
 }
 
 interface TallyWidgetApi {
@@ -69,7 +69,7 @@ export const openWaitlistForm = () => {
     onClose: () => {
       trackEvent("tally_form_close");
     },
-    onSubmit: (payload: any) => {
+    onSubmit: (payload: EventValue) => {
       trackEvent("tally_form_submit", { payload });
     },
   });

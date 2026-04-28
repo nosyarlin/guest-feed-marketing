@@ -1,26 +1,27 @@
-# GA4 Event Map and Validation (RAY-51)
+# GA4 Event Map
 
-This landing page emits the following GA4 events:
+This landing page currently emits the following GA4 events:
 
-| Event | Trigger | Source file |
-| --- | --- | --- |
-| `page_view` | On app boot | `src/main.tsx` |
-| `cta_click` | Header, hero, pricing, waitlist CTA clicks | `src/components/layout/SiteHeader.tsx`, `src/components/sections/HeroSection.tsx`, `src/components/sections/PricingSection.tsx`, `src/App.tsx` |
-| `pricing_intent_yes` | Waitlist intent set to yes and CTA clicked | `src/App.tsx` |
-| `waitlist_submit` | Manual waitlist confirmation action | `src/App.tsx` |
+| Event | Trigger | Params | Source file |
+| --- | --- | --- | --- |
+| `page_view` | On app boot | `page: "landing"` | `src/main.tsx` |
+| `cta_click` | Header, hero, pricing, waitlist CTA clicks | `placement: "top_nav" | "hero_primary" | "pricing" | "waitlist"` | `src/components/layout/SiteHeader.tsx`, `src/components/sections/HeroSection.tsx`, `src/components/sections/PricingSection.tsx`, `src/components/sections/WaitlistSection.tsx` |
+| `tally_form_open` | Tally popup opens | none | `src/lib/tally.ts` |
+| `tally_form_close` | Tally popup closes | none | `src/lib/tally.ts` |
+| `tally_form_submit` | Tally submit callback fires | `payload` (full Tally payload object) | `src/lib/tally.ts` |
 
 ## Manual verification checklist
 
-1. Set `VITE_GA_MEASUREMENT_ID` in `.env`.
+1. Set `VITE_GA_MEASUREMENT_ID` and `VITE_TALLY_FORM_ID` in `.env`.
 2. Run `npm run dev` and open the landing page.
-3. Open browser DevTools and inspect network requests to `collect?v=2` or inspect GA4 DebugView.
-4. Verify these actions emit the expected event:
-   - Initial page load -> `page_view`
-   - Click each CTA location -> `cta_click`
-   - Choose "yes" then click waitlist CTA -> `pricing_intent_yes`
-   - Click confirm submission button -> `waitlist_submit`
+3. Open browser DevTools and inspect GA requests (`collect?v=2`) or GA4 DebugView.
+4. Verify:
+   - Initial page load -> `page_view` with `page=landing`
+   - Click each CTA location -> `cta_click` with the expected `placement`
+   - Open Tally popup -> `tally_form_open`
+   - Close Tally popup -> `tally_form_close`
+   - Submit Tally form -> `tally_form_submit` with `payload`
 
-## Verification evidence in this branch
+## Automated verification
 
-- Static checks: `npm run build`
-- Source audit confirms all acceptance-criteria events are instrumented and mapped above.
+- `npm run test:e2e` validates GA4 data layer events including full `tally_form_submit.payload`.
