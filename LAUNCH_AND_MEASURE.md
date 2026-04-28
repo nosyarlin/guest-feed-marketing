@@ -5,7 +5,7 @@
 - Ensure repository Pages source is set to GitHub Actions.
 - Add repository variables:
   - `VITE_GA_MEASUREMENT_ID`
-  - `VITE_TALLY_FORM_URL`
+  - `VITE_TALLY_FORM_ID`
 - Push to `main` to trigger `.github/workflows/deploy.yml`.
 
 ## 2) Tally form setup

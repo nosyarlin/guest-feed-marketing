@@ -36,3 +36,32 @@ Configure the form with:
 ## Deploy
 
 Deployment is automated with GitHub Actions to GitHub Pages via `.github/workflows/deploy.yml`.
+
+### Production domain
+
+- Primary domain: `https://guestfeed.xyz`
+- GitHub Pages default URL: `https://nosyarlin.github.io/guest-feed-marketing/`
+- Custom domain is configured through `public/CNAME` and gets included in the deployed artifact.
+
+### Build and deploy flow
+
+1. Push to `main`.
+2. GitHub Actions runs:
+   - `npm ci`
+   - `npm run build`
+   - `actions/upload-pages-artifact` (publishes `dist`)
+   - `actions/deploy-pages`
+3. Site is served on GitHub Pages and bound to `guestfeed.xyz`.
+
+Required GitHub repository variables:
+
+- `VITE_GA_MEASUREMENT_ID`
+- `VITE_TALLY_FORM_ID`
+
+### Rollback procedure
+
+If a bad deploy reaches production:
+
+1. Go to repository **Actions** → **Deploy to GitHub Pages**.
+2. Open the last known-good workflow run and use **Re-run all jobs** to redeploy that commit.
+3. If needed, revert the offending commit on `main` and push; the workflow will deploy the reverted state.

@@ -34,7 +34,7 @@ jobs:
         run: npm run build
         env:
           VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
-          VITE_TALLY_FORM_URL: ${{ vars.VITE_TALLY_FORM_URL }}
+          VITE_TALLY_FORM_ID: ${{ vars.VITE_TALLY_FORM_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
