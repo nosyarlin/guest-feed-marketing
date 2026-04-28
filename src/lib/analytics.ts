@@ -1,4 +1,9 @@
-type EventProps = Record<string, string | number | boolean>;
+export type EventPrimitive = string | number | boolean | null;
+export type EventValue =
+  | EventPrimitive
+  | EventValue[]
+  | { [key: string]: EventValue };
+export type EventProps = Record<string, EventValue>;
 
 declare global {
   interface Window {
@@ -24,9 +29,8 @@ export function initAnalytics(): void {
   document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    // Use canonical GA shim shape: push the `arguments` object.
-    window.dataLayer?.push(arguments as unknown as never);
+  window.gtag = function gtag(...args: unknown[]) {
+    window.dataLayer?.push(args);
   };
 
   window.gtag("js", new Date());

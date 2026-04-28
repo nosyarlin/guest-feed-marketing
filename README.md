@@ -13,7 +13,7 @@ npm run dev
 ## Required environment variables
 
 - `VITE_GA_MEASUREMENT_ID`: Google Analytics 4 measurement ID.
-- `VITE_TALLY_FORM_URL`: public Tally form URL for waitlist conversion.
+- `VITE_TALLY_FORM_ID`: Tally form ID used for popup waitlist conversion.
 
 ## Analytics events
 
