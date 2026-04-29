@@ -31,13 +31,13 @@ jobs:
         run: npm ci
 
       - name: List all environment variables
-        run: echo "VITE_GA_MEASUREMENT_ID is ${{ vars.VITE_GA_MEASUREMENT_ID }}"
+        run: echo "VITE_GA_MEASUREMENT_ID is ${{ env.VITE_GA_MEASUREMENT_ID }}"
 
       - name: Build
         run: npm run build
         env:
-          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
-          VITE_TALLY_FORM_ID: ${{ vars.VITE_TALLY_FORM_ID }}
+          VITE_GA_MEASUREMENT_ID: ${{ env.VITE_GA_MEASUREMENT_ID }}
+          VITE_TALLY_FORM_ID: ${{ env.VITE_TALLY_FORM_ID }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
