@@ -29,4 +29,14 @@ test.describe("Landing visual regression", () => {
       mask: [page.locator("video")],
     });
   });
+
+  test("tablet view", async ({ page }) => {
+    await page.setViewportSize({ width: 768, height: 2600 });
+    await page.goto("/");
+    await stabilizeMedia(page);
+    await expect(page).toHaveScreenshot("landing-tablet.png", {
+      fullPage: true,
+      mask: [page.locator("video")],
+    });
+  });
 });
