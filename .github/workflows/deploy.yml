@@ -31,7 +31,7 @@ jobs:
         run: npm ci
 
       - name: List all environment variables
-        run: vars | sort
+        run: echo "VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}"
 
       - name: Build
         run: npm run build
