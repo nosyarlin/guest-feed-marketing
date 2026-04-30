@@ -23,13 +23,16 @@ export function PricingSection() {
         </p>
         <ul className="mt-5 grid gap-3 text-lg">
           <li className="before:mr-2 before:text-accent before:content-['●']">
-            Live site active 30 days before and 1 day after the event
+            Live site active 30 days before the event
+          </li>
+          <li className="before:mr-2 before:text-accent before:content-['●']">
+            Your feed stays viewable for 30 days after the wedding
           </li>
           <li className="before:mr-2 before:text-accent before:content-['●']">
             Guests post unlimited photos and messages via Telegram
           </li>
           <li className="before:mr-2 before:text-accent before:content-['●']">
-            Complete ZIP keepsake delivery after shutdown
+            All memories delivered as ZIP after event
           </li>
         </ul>
       </div>
