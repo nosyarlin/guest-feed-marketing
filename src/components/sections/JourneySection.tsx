@@ -106,12 +106,11 @@ export function JourneySection() {
           textColumnClassName="order-2 md:order-2"
           mediaColumnClassName="order-1 flex items-center justify-center md:order-1"
           media={
-            <div className="relative mx-auto w-full max-w-[330px] rounded-[2.2rem] border-[6px] border-phone-frame bg-phone-shell p-2 shadow-2xl">
-              <div className="absolute left-1/2 top-2 h-1.5 w-16 -translate-x-1/2 rounded-full bg-phone-frame" />
+            <div className="relative mx-auto w-full max-w-[330px] rounded-[2.2rem] shadow-2xl">
               <img
                 src={telegramScreenshot}
                 alt="Guest authenticating and messaging in Telegram bot from a phone"
-                className="h-full w-full rounded-[1.6rem] border border-phone-border object-cover"
+                className="h-full w-full rounded-[1.6rem] border-6 border-phone-border object-cover"
                 loading="lazy"
                 decoding="async"
                 sizes="(max-width: 768px) 82vw, 300px"
